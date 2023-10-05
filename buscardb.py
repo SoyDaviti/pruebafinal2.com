@@ -1,28 +1,14 @@
-from pymongo.mongo_client import MongoClient
-from pymongo.server_api import ServerApi
+class Autos:
+    def __init__(self, modelo_auto, anio_auto, precio_auto, auto_detalle):
+        self.modelo_auto = modelo_auto
+        self.anio_auto = anio_auto
+        self.precio_auto = precio_auto
+        self.auto_detalle = auto_detalle
 
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-class busquedamongo:
-    def __init__(self):
-        user = os.getenv("MONGO_USER")
-        password = os.getenv("MONGO_PASSWORD")
-        db_hostname = os.getenv("MONGO_HOST")
-        uri = f"mongodb+srv://{user}:{password}@{db_hostname}/?retryWrites=true&w=majority"
-
-        # Create a new client and connect to the server
-        self.client = MongoClient(uri, server_api=ServerApi('1'))
-
-    # Send a ping to confirm a successful connection
-    def test_connection(self):
-        try:
-            self.client.admin.command('ping')
-            print("Pinged your deployment. You successfully connected to MongoDB!")
-        except Exception as e:
-            print(e)
-
-if __name__ == "__main__":
-    busquedamongo().test_connection()
+    def toDBCollection(self):
+        return{
+            'modelo_auto':self.modelo,
+            'anio_auto': self.anio_auto,
+            'precio_auto': self.precio_auto,
+            'auto_detalle': self.auto_detalle
+        }
